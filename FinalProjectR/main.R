@@ -143,6 +143,12 @@ print("Linear Model Summary")
 summary(linear_model)
 get_test_error(linear_model, bike_test)
 
+
+linear_model_2 <- lm(count ~ +temp +humidity +season +weather, data=bike_train)
+print("Linear Model 2 Summary")
+summary(linear_model_2)
+get_test_error(linear_model_2, bike_test)
+
 # library(MASS)
 # linear_model_ridege <- lm.ridge(total_riders_formula, data=bike_train, lambda=seq(0,0.1,0.001))
 # print("Ridge Regression Summary lambda=")
@@ -164,7 +170,7 @@ get_test_error(decision_tree_model, bike_test)
 decision_tree_model_2 <- ctree(total_riders_formula, data=bike_train, controls=ctree_control(maxdepth = 3))
 print("Decision Tree Summary Depth limited to 3")
 summary(decision_tree_model_2)
-png(paste(imgDir, "decision_tree_2.png", sep=""), width=500, height=500)
+png(paste(imgDir, "decision_tree_2.png", sep=""), width=750, height=500)
 plot(decision_tree_model_2, main="Decision Tree Max Depth = 3")
 dev.off()
 get_test_error(decision_tree_model_2, bike_test)
@@ -173,10 +179,12 @@ get_test_error(decision_tree_model_2, bike_test)
 decision_tree_model_3 <- ctree(total_riders_formula, data=bike_train, controls=ctree_control(maxdepth = 4))
 print("Decision Tree Summary Depth limited to 4")
 summary(decision_tree_model_3)
-png(paste(imgDir, "decision_tree_3.png", sep=""), width=500, height=500)
+png(paste(imgDir, "decision_tree_3.png", sep=""), width=750, height=500)
 plot(decision_tree_model_3, main="Decision Tree Max Depth = 4")
 dev.off()
 get_test_error(decision_tree_model_3, bike_test)
+
+
 
 # Random Forest
 # library(randomForest) # using cforrest for now because I learned it in another class.
@@ -185,13 +193,13 @@ print("Random Forest Summary")
 summary(cforest_model)
 get_test_error(cforest_model, bike_test)
 
-cforest_model_2 <- cforest(total_riders_formula, data=bike_train,  controls=ctree_control(mtry = 4))
-print("Random Forest mtry = 4, Summary")
+cforest_model_2 <- cforest(total_riders_formula, data=bike_train,  controls=cforest_control(mtry=3))
+print("Random Forest mtry = 3, Summary")
 summary(cforest_model_2)
 get_test_error(cforest_model_2, bike_test)
 
-cforest_model_3 <- cforest(total_riders_formula, data=bike_train,  controls=ctree_control(mtry = 7))
-print("Random Forest mtry = 7, Summary")
+cforest_model_3 <- cforest(total_riders_formula, data=bike_train,  controls=cforest_control(mtry = 6))
+print("Random Forest mtry = 6, Summary")
 summary(cforest_model_3)
 get_test_error(cforest_model_3, bike_test)
 
